@@ -1,4 +1,5 @@
-﻿using btr.Models;
+﻿using System.Text.Json;
+using btr.Models;
 using btr.Servies.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,16 +13,25 @@ namespace btr.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            _logger.LogInformation($"{Request.HttpContext.Connection.RemoteIpAddress} conneted. Get books");
+            _logger.LogInformation($"{Request.HttpContext.Connection.RemoteIpAddress} connected. Get books");
             var books = _bookService.GetBooks();
-            return Ok(books);
+            var booksJson = JsonSerializer.Serialize(books);
+            return Ok(booksJson);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody]Book book)
         {
-            _logger.LogInformation($"{Request.HttpContext.Connection.RemoteIpAddress} conneted. Add book {book.Title}");
+            _logger.LogInformation($"{Request.HttpContext.Connection.RemoteIpAddress} connected. Add book {book.Title}");
             var isSuccess = _bookService.AddBook(book);
+            return isSuccess ? Ok() : BadRequest();
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody]Book book)
+        {
+            _logger.LogInformation($"{Request.HttpContext.Connection.RemoteIpAddress} connected. Remove book {book.Title}");
+            var isSuccess = _bookService.RemoveBook(book);
             return isSuccess ? Ok() : BadRequest();
         }
     }

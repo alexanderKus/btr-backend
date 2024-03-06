@@ -6,5 +6,6 @@ namespace btr.Servies.Interfaces
     {
         public IEnumerable<Book> GetBooks();
         public bool AddBook(Book book);
+        public bool RemoveBook(Book book);
     }
 }
