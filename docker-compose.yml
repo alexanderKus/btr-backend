@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8000:80
+    restart: unless-stopped
+    depends_on:
+      - dotnetapi
+    networks:
+      - app_network
+    links:
+      - dotnetapi
+
+  dotnetapi:
+    build: 
+      context: './btr'
+      dockerfile: Dockerfile
+    expose:
+      - 8080
+    restart: unless-stopped
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

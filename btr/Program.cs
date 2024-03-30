@@ -1,3 +1,4 @@
+using System.Net;
 using btr.Servies;
 using btr.Servies.Interfaces;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -24,6 +25,13 @@ builder.Services.AddCors(options =>
       });
 });
 
+builder.Services.AddAuthentication();
+
+// builder.Services.Configure<ForwardedHeadersOptions>(options =>
+// {
+//     options.KnownProxies.Add(IPAddress.Parse("127.0.0.1"));
+// });
+
 var app = builder.Build();
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -42,7 +50,8 @@ app.UseHttpsRedirection();
 
 app.UseCors("_allOrigin");
 
-app.UseAuthorization();
+// app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 
