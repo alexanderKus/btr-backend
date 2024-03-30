@@ -27,11 +27,6 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAuthentication();
 
-// builder.Services.Configure<ForwardedHeadersOptions>(options =>
-// {
-//     options.KnownProxies.Add(IPAddress.Parse("127.0.0.1"));
-// });
-
 var app = builder.Build();
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
