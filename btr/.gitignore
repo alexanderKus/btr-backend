@@ -43,4 +43,4 @@ msbuild.err
 msbuild.wrn
 
 # My custom files
-btr_data.txt
+#btr_data.txt
